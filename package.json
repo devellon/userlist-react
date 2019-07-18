@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Simple rest api for list of users written in Node + Restify",
   "main": "index.js",
-  "repository": "https://github.com/honzapospi/userlist",
+  "repository": "https://github.com/simonarnost/userlist-react.git",
   "author": "Jan Pospisil <me@jan-pospisil.cz>",
   "license": "MIT",
   "private": true,
