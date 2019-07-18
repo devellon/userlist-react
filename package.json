@@ -1,0 +1,22 @@
+{
+  "name": "userlist",
+  "version": "1.0.0",
+  "description": "Simple rest api for list of users written in Node + Restify",
+  "main": "index.js",
+  "repository": "https://github.com/honzapospi/userlist",
+  "author": "Jan Pospisil <me@jan-pospisil.cz>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "restify": "^7.2.1",
+    "restify-cors-middleware": "^1.1.1",
+    "restify-plugins": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
