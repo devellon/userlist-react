@@ -2,3 +2,9 @@
     display: flex;
     justify-content: center;
 }
+
+.loadingText {
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+}

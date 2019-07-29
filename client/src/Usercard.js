@@ -1,29 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 import './Usercard.css';
+import { deleteUser } from './apiCalls';
 
-class Usercard extends Component {
-    render() {
-        return (
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" />
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-            </Card.Text>
-                </Card.Body>
-                <Card.Body>
-                    <div className="buttonsArea">
-                        <Button variant="primary">Primary</Button>
-                        <Button variant="primary">Primary</Button>
-                    </div>
-                </Card.Body>
-            </Card>
-        );
-    }
+
+const Usercard = ({ key, id, name, surname, job, removeUser }) => {
+    const fullName = `${name} ${surname}`;
+
+    return (
+        <Card style={{ width: '14rem' }}>
+            <Card.Img variant="top" />
+            <Card.Body>
+                <Card.Title className="name">{fullName}</Card.Title>
+                <Card.Text>
+
+                </Card.Text>
+            </Card.Body>
+            <Card.Body>
+                <div className="buttonsArea">
+                    <Button variant="primary">Details</Button>
+                    <Button variant="danger" onClick={removeUser(id)}> Delete</Button>
+                </div>
+            </Card.Body>
+        </Card>
+    );
 }
 
-export default Usercard;
+/*const mapStateToProps = state => ({
+    users: state.users.items
+})*/
+
+const mapDispatchToProps = dispatch => ({
+    removeUser(id) {
+        return () => {
+            dispatch(deleteUser(id));
+        };
+    },
+})
+
+export default connect(/*mapStateToProps,*/null, mapDispatchToProps)(Usercard);
