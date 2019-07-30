@@ -1,4 +1,4 @@
-import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USERS_LOADING} from './actions/actionTypes';
+import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USERS_LOADING, NEW_USER_SUCCESS} from './actions/actionTypes';
 
 const initialState = {
     items: [],
@@ -28,12 +28,21 @@ export default function userReducer(state = initialState, action) {
                 items: []
             }
         case DELETE_USER_SUCCESS:
-            const newList = state.items.filter(user => user.id !== action.payload);
+            const newList = state.items.filter(user => user.id !== action.payload);      
             return {
                 ...state,
                 error: null,
                 items: newList
             }
+        case NEW_USER_SUCCESS:
+            action.payload.newUser.id = action.payload.id;
+             
+            return {
+                ...state,
+                error: null,
+                items: [...state.items, action.payload.newUser]
+            }
+        
         default: 
             return state;
     }

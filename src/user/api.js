@@ -32,7 +32,7 @@ const fakePromise = (data, err) => {
 const getUsers = () => {
   return fakePromise(
     users.map(user => {
-      return { id: user.id, name: user.name, surname: user.surname };
+      return { id: user.id, name: user.name, surname: user.surname, job: user.job };
     })
   );
 };

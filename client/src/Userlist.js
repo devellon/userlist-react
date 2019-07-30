@@ -3,7 +3,7 @@ import Usercard from './Usercard';
 import './Userlist.css';
 import { fetchUsers } from './apiCalls';
 import { connect } from 'react-redux';
-import Button from 'react-bootstrap/Button';
+import NewUserModal from './NewUserModal.js';
 
 class Userlist extends Component {
     componentDidMount() {
@@ -38,7 +38,7 @@ class Userlist extends Component {
         return (
             <div className="cardsArea">
                 {userComponent}
-                <Button variant="success">New User</Button>
+                <NewUserModal />
             </div>
         )
     }
