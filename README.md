@@ -1,6 +1,8 @@
-# Zadání 
+Front-end byl vytvořen ve složce **client**.
 
 ---
+
+# Zadání 
 
 # Rest server - userlist
 
