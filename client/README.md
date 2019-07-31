@@ -11,7 +11,7 @@
 
 ## Instalace a spuštění
 
-1. Ujistěte se, že máte spuštěný server v nadřazené složce 
+1. Ujistěte se, že máte spuštěný backend server v nadřazené složce 
 
 2. Nainstalujte závislosti
 ```
