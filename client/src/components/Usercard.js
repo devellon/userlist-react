@@ -3,7 +3,9 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import './Usercard.css';
-import { deleteUser } from './apiCalls';
+import { deleteUser } from '../actions/apiCalls';
+import ModalDetails from './ModalDetails';
+import EditUserModal from './EditUserModal';
 
 
 const Usercard = ({ id, name, surname, job, removeUser }) => {
@@ -20,8 +22,8 @@ const Usercard = ({ id, name, surname, job, removeUser }) => {
             </Card.Body>
             <Card.Body>
                 <div className="buttonsArea">
-                    <Button variant="primary" size="sm">Details</Button>
-                    <Button variant="warning" size="sm">Edit</Button>
+                    <ModalDetails job={job} />
+                    <EditUserModal id={id} name={name} surname={surname} job={job} />
                     <Button variant="danger" size="sm" onClick={removeUser(id)}> Delete</Button>
                 </div>
             </Card.Body>

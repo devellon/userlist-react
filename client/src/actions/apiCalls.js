@@ -1,7 +1,8 @@
 import {
     FETCH_USERS_SUCCESS,/*, FETCH_USERS_FAILURE*/
-    DELETE_USER_SUCCESS, FETCH_USERS_LOADING, NEW_USER_SUCCESS
-} from './actions/actionTypes';
+    DELETE_USER_SUCCESS, FETCH_USERS_LOADING,
+    NEW_USER_SUCCESS, EDIT_USER_SUCCESS
+} from './actionTypes';
 import axios from 'axios';
 
 export const fetchUsersLoad = () => ({
@@ -27,10 +28,13 @@ export const newUserSuccess = (data, newUser) => ({
     }
 });
 
-/*export const fetchUsersFailure = error => ({
-    type: FETCH_USERS_FAILURE,
-    payload: { error }
-});*/
+export const editUserSuccess = (data, changedUser) => ({
+    type: EDIT_USER_SUCCESS,
+    payload: {
+        changedUser: changedUser,
+        message: data.message
+    }
+})
 
 export const fetchUsers = () => {
     return dispatch => {
@@ -51,17 +55,39 @@ export const deleteUser = (id) => {
 };
 
 export const newUser = ({ firstName, lastName, job }) => {
-    console.log({ firstName, lastName, job });
     const addedUser = {
         name: firstName,
         surname: lastName,
         job: job
     }
-    console.log(addedUser);
     return dispatch => {
-        return axios.post("/user", { name: firstName, surname: lastName, job: job })
+        return axios.post("/user", addedUser)
             .then(response => {
                 dispatch(newUserSuccess(response.data, addedUser))
+            })
+            .catch(error => {
+                console.log(error);
+                throw (error);
+            });
+    };
+};
+
+export const editUser = (originalUser, { firstName, lastName, job }) => {
+    const changedUser = {
+        id: originalUser.id,
+        name: firstName,
+        surname: lastName,
+        job: job
+    }
+
+    if (changedUser.name === undefined) changedUser.name = originalUser.name;
+    if (changedUser.surname === undefined) changedUser.surname = originalUser.surname;
+    if (changedUser.job === undefined) changedUser.job = originalUser.job;
+
+    return dispatch => {
+        return axios.post(`/user/${originalUser.id}`, changedUser)
+            .then(response => {
+                dispatch(editUserSuccess(response.data, changedUser))
             })
             .catch(error => {
                 console.log(error);

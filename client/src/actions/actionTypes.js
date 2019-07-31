@@ -6,5 +6,4 @@ export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 
 export const NEW_USER_SUCCESS = 'NEW_USER_SUCCESS';
 
-export const EDIT_USER = 'EDIT_USER';
-
+export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';

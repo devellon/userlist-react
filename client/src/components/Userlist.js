@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Usercard from './Usercard';
 import './Userlist.css';
-import { fetchUsers } from './apiCalls';
+import { fetchUsers } from '../actions/apiCalls';
 import { connect } from 'react-redux';
 import NewUserModal from './NewUserModal.js';
 

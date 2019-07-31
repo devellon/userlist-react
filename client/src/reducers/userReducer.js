@@ -1,4 +1,8 @@
-import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USERS_LOADING, NEW_USER_SUCCESS} from './actions/actionTypes';
+import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USERS_LOADING, NEW_USER_SUCCESS, EDIT_USER_SUCCESS} from '../actions/actionTypes';
+
+/*
+    Takes care of every action of userlist
+*/
 
 const initialState = {
     items: [],
@@ -41,6 +45,22 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 error: null,
                 items: [...state.items, action.payload.newUser]
+            }
+        case EDIT_USER_SUCCESS:
+            const updatedList = state.items.map((user) => {
+                if(user.id === action.payload.changedUser.id){
+                    return action.payload.changedUser;   
+                }
+
+                return user;
+            })
+
+            console.log("updatedList:", updatedList);
+
+            return {
+                ...state,
+                error: null,
+                items: updatedList
             }
         
         default: 
