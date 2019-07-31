@@ -3,25 +3,35 @@ import Usercard from './Usercard';
 import './Userlist.css';
 import { fetchUsers } from '../actions/apiCalls';
 import { connect } from 'react-redux';
-import NewUserModal from './NewUserModal.js';
+import NewUserModal from './NewUserModal';
+
 
 class Userlist extends Component {
     componentDidMount() {
         this.props.dispatch(fetchUsers());
     }
 
+    showStatusMessage()  {
+        return 
+    }
+
     render() {
-        const { error, users, loading } = this.props;
+        
+        const { error, users, loading, message } = this.props;
 
         if (error) {
-            return <div>Error loading users</div>
+            return <div className="messageText">
+                        <div>Error during user loading: </div>
+                        <div>{error}</div>
+                   </div>
         }
 
         if (loading) {
             console.log("loading");
-            return <div className="loadingText">Loading users</div>
+            return <div className="messageText">Loading users</div>
         }
 
+        console.log(message);
         const userComponent = users.map((user) => {
             return (
                 <div className="card" key={user.id}>
@@ -36,9 +46,12 @@ class Userlist extends Component {
         })
 
         return (
-            <div className="cardsArea">
-                {userComponent}
-                <NewUserModal />
+            <div>
+                <div className="cardsArea">
+                    {userComponent}
+                    <NewUserModal />
+                </div>
+                
             </div>
         )
     }
@@ -46,7 +59,9 @@ class Userlist extends Component {
 
 const mapStateToProps = state => ({
     users: state.users.items,
-    loading: state.users.loading
+    loading: state.users.loading,
+    message: state.users.message,
+    error: state.users.error
 });
 
 export default connect(mapStateToProps)(Userlist);

@@ -1,4 +1,9 @@
-import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USERS_LOADING, NEW_USER_SUCCESS, EDIT_USER_SUCCESS} from '../actions/actionTypes';
+import {
+    FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS,
+    FETCH_USERS_LOADING, NEW_USER_SUCCESS, EDIT_USER_SUCCESS,
+    DELETE_USER_FAILURE, EDIT_USER_FAILURE,
+    NEW_USER_FAILURE
+} from '../actions/actionTypes';
 
 /*
     Takes care of every action of userlist
@@ -7,12 +12,13 @@ import {FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER_SUCCESS, FETCH_USE
 const initialState = {
     items: [],
     loading: false,
-    error: null
+    error: null,
+    message: ''
 }
 
 export default function userReducer(state = initialState, action) {
-    switch(action.type){
-        case FETCH_USERS_LOADING: 
+    switch (action.type) {
+        case FETCH_USERS_LOADING:
             return {
                 ...state,
                 loading: true,
@@ -32,38 +38,58 @@ export default function userReducer(state = initialState, action) {
                 items: []
             }
         case DELETE_USER_SUCCESS:
-            const newList = state.items.filter(user => user.id !== action.payload);      
+            const newList = state.items.filter(user => user.id !== action.payload);
             return {
                 ...state,
                 error: null,
-                items: newList
+                items: newList,
+                message: 'User has been deleted.'
             }
+        case DELETE_USER_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
+                items: []
+            }
+        case EDIT_USER_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
+                items: []
+            }
+        case NEW_USER_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
+                items: []
+            }
+
         case NEW_USER_SUCCESS:
             action.payload.newUser.id = action.payload.id;
-             
+
             return {
                 ...state,
                 error: null,
-                items: [...state.items, action.payload.newUser]
+                items: [...state.items, action.payload.newUser],
+                message: action.payload.message
             }
         case EDIT_USER_SUCCESS:
             const updatedList = state.items.map((user) => {
-                if(user.id === action.payload.changedUser.id){
-                    return action.payload.changedUser;   
+                if (user.id === action.payload.changedUser.id) {
+                    return action.payload.changedUser;
                 }
 
                 return user;
             })
 
-            console.log("updatedList:", updatedList);
-
             return {
                 ...state,
                 error: null,
-                items: updatedList
+                items: updatedList,
+                message: 'User edited.'
             }
-        
-        default: 
+
+        default:
             return state;
     }
 }

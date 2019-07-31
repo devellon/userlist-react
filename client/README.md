@@ -1,4 +1,4 @@
-# User List - Front-end
+# User List - Frontend
 
 ## Použité technologie
 - React

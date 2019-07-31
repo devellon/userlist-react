@@ -1,8 +1,10 @@
 import {
-    FETCH_USERS_SUCCESS,/*, FETCH_USERS_FAILURE*/
-    DELETE_USER_SUCCESS, FETCH_USERS_LOADING,
-    NEW_USER_SUCCESS, EDIT_USER_SUCCESS
-} from './actionTypes';
+    FETCH_USERS_SUCCESS,DELETE_USER_SUCCESS, 
+    FETCH_USERS_LOADING,NEW_USER_SUCCESS, 
+    EDIT_USER_SUCCESS, FETCH_USERS_FAILURE,
+    DELETE_USER_FAILURE, NEW_USER_FAILURE,
+    EDIT_USER_FAILURE
+    } from './actionTypes';
 import axios from 'axios';
 
 export const fetchUsersLoad = () => ({
@@ -12,6 +14,11 @@ export const fetchUsersLoad = () => ({
 export const fetchUsersSuccess = users => ({
     type: FETCH_USERS_SUCCESS,
     payload: { users }
+});
+
+export const fetchUsersFailure =  error => ({
+    type: FETCH_USERS_FAILURE,
+    payload: {error}
 });
 
 export const deleteUserSuccess = (id) => ({
@@ -28,6 +35,21 @@ export const newUserSuccess = (data, newUser) => ({
     }
 });
 
+export const deleteUserFailure = error => ({
+    type: DELETE_USER_FAILURE,
+    payload: {error}
+});
+
+export const editUserFailure = error => ({
+    type: EDIT_USER_FAILURE,
+    payload: {error}
+});
+
+export const newUserFailure = error => ({
+    type: NEW_USER_FAILURE,
+    payload: {error}
+});
+
 export const editUserSuccess = (data, changedUser) => ({
     type: EDIT_USER_SUCCESS,
     payload: {
@@ -42,15 +64,22 @@ export const fetchUsers = () => {
         return axios.get("/user")
             .then(response => {
                 dispatch(fetchUsersSuccess(response.data));
+            })
+            .catch(error => {
+                dispatch(fetchUsersFailure(error.response.data))
+                throw(error);
             });
     };
 };
 
 export const deleteUser = (id) => {
-    console.log("delete");
     return dispatch => {
         return axios.delete(`/user/${id}`)
             .then(dispatch(deleteUserSuccess(id)))
+            .catch(error => {
+                dispatch(deleteUserFailure(error.response.data))
+                throw(error);
+            });
     };
 };
 
@@ -66,8 +95,8 @@ export const newUser = ({ firstName, lastName, job }) => {
                 dispatch(newUserSuccess(response.data, addedUser))
             })
             .catch(error => {
-                console.log(error);
-                throw (error);
+                dispatch(newUserFailure(error.response.data))
+                throw(error);
             });
     };
 };
@@ -90,8 +119,8 @@ export const editUser = (originalUser, { firstName, lastName, job }) => {
                 dispatch(editUserSuccess(response.data, changedUser))
             })
             .catch(error => {
-                console.log(error);
-                throw (error);
+                dispatch(editUserFailure(error.response.data))
+                throw(error);
             });
     };
 };
